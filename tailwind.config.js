@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         grey1: "#F1F2F4",
       },
+      fontFamily: {
+        ubuntu: "Ubuntu",
+      },
     },
   },
   plugins: [],

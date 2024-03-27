@@ -6,18 +6,19 @@ import {
   Gift,
   CreditCard,
 } from "lucide-react";
+import "tailwindcss/tailwind.css";
 
 const NavbarLogin = () => {
   const [hoverMenu, setHoverMenu] = useState(null);
 
   return (
-    <div className="absolute top-[50px] right-80 z-10 w-60 rounded-md shadow-sm shadow-slate-700 bg-white">
+    <div className="absolute top-[50px] right-80 z-10 w-60 rounded-md shadow-sm shadow-slate-700 bg-white font-ubuntu">
       <ul className="flex flex-col">
         <li
           className={`flex justify-between items-center p-3 border-b-2 border-slate-300`}
         >
           <span>New customer</span>
-          <span className="text-blue-500">Sign Up</span>
+          <span className="text-blue-700 font-semibold">Sign Up</span>
         </li>
         <li
           className={`flex gap-2 items-center px-3 py-2 ${
@@ -26,7 +27,7 @@ const NavbarLogin = () => {
           onMouseEnter={() => setHoverMenu("Profile")}
           onMouseLeave={() => setHoverMenu(null)}
         >
-          <CircleUserRound size={20} /> My Profile
+          <CircleUserRound strokeWidth={1} size={20} /> My Profile
         </li>
         <li
           className={`flex gap-2 items-center px-3 py-2 ${
@@ -35,7 +36,7 @@ const NavbarLogin = () => {
           onMouseEnter={() => setHoverMenu("Orders")}
           onMouseLeave={() => setHoverMenu(null)}
         >
-          <Package size={20} /> Orders
+          <Package strokeWidth={1} size={20} /> Orders
         </li>
         <li
           className={`flex gap-2 items-center px-3 py-2 ${
@@ -44,7 +45,7 @@ const NavbarLogin = () => {
           onMouseEnter={() => setHoverMenu("Wishlist")}
           onMouseLeave={() => setHoverMenu(null)}
         >
-          <Heart size={20} /> Wishlist
+          <Heart strokeWidth={1} size={20} /> Wishlist
         </li>
         <li
           className={`flex gap-2 items-center px-3 py-2 ${
@@ -53,7 +54,7 @@ const NavbarLogin = () => {
           onMouseEnter={() => setHoverMenu("Rewards")}
           onMouseLeave={() => setHoverMenu(null)}
         >
-          <Gift size={20} /> Rewards
+          <Gift strokeWidth={1} size={20} /> Rewards
         </li>
         <li
           className={`flex gap-2 items-center px-3 py-2 ${
@@ -62,7 +63,7 @@ const NavbarLogin = () => {
           onMouseEnter={() => setHoverMenu("Gift")}
           onMouseLeave={() => setHoverMenu(null)}
         >
-          <CreditCard size={20} /> Gift Cards
+          <CreditCard strokeWidth={1} size={20} /> Gift Cards
         </li>
       </ul>
     </div>

@@ -8,13 +8,14 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import "tailwindcss/tailwind.css";
 import NavbarVerticalMenu from "../Home/NavbarMenuList/NavbarVerticalMenu";
 
 const Navbar = () => {
   const [hover, setHover] = useState(null);
 
   return (
-    <nav className="bg-white flex justify-center relative">
+    <nav className="bg-white flex justify-center relative font-ubuntu">
       <div className="max-w-7xl w-full flex justify-between items-center">
         <img
           className="w-12 h-12"
@@ -30,7 +31,7 @@ const Navbar = () => {
             <span
               className={`p-2 flex gap-1 items-center rounded-md ${
                 hover === "Login"
-                  ? "bg-blue-500 text-slate-50 cursor-pointer"
+                  ? "bg-blue-700 text-slate-50 cursor-pointer"
                   : "text-slate-950"
               }`}
             >
@@ -44,16 +45,20 @@ const Navbar = () => {
             </span>
             {hover === "Login" ? <NavbarLogin /> : null}
           </li>
-          <li className={`flex items-center gap-2`}>
+          <li className={`flex items-center gap-2 cursor-pointer`}>
             <ShoppingCart />
             Cart
           </li>
-          <li className={`flex items-center gap-2`}>
+          <li className={`flex items-center gap-2 cursor-pointer`}>
             <Store />
             Become a Seller
           </li>
           <li
-            className={`bg-red-300 p-2`}
+            className={`p-2 rounded-md border-2 ${
+              hover === "Dot"
+                ? " border-gray-200 bg-gray-100 cursor-pointer"
+                : "border-white"
+            }`}
             onMouseEnter={() => setHover("Dot")}
             onMouseLeave={() => setHover(null)}
           >
