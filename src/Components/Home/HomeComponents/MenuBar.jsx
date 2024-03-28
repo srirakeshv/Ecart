@@ -1,12 +1,12 @@
 import React from "react";
 import MenuBar1 from "../../../ArrayList/MenuBarList";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import "tailwindcss/tailwind.css";
 
 const MenuBar = () => {
   return (
     <div
-      className="p-2 font-ubuntu"
+      className="p-3 px-4 font-ubuntu"
       style={{ maxWidth: "100vw", minHeight: "10vh" }}
     >
       <div className="bg-white w-full h-full">
