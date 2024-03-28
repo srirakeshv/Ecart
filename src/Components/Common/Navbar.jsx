@@ -10,17 +10,20 @@ import {
 } from "lucide-react";
 import "tailwindcss/tailwind.css";
 import NavbarVerticalMenu from "../Home/NavbarMenuList/NavbarVerticalMenu";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [hover, setHover] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <nav className="bg-white flex justify-center relative font-ubuntu">
       <div className="max-w-7xl w-full flex justify-between items-center">
         <img
-          className="w-12 h-12"
+          className="w-12 h-12 cursor-pointer"
           src={`${process.env.PUBLIC_URL}/Asset/Logo/Logo.png`}
           alt="logo"
+          onClick={() => navigate("/")}
         />
         <ul className="flex items-center gap-7">
           <li
@@ -49,7 +52,10 @@ const Navbar = () => {
             <ShoppingCart />
             Cart
           </li>
-          <li className={`flex items-center gap-2 cursor-pointer`}>
+          <li
+            className={`flex items-center gap-2 cursor-pointer`}
+            onClick={() => navigate("/ProductPage")}
+          >
             <Store />
             Become a Seller
           </li>
