@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white flex justify-center relative font-ubuntu">
-      <div className="max-w-7xl w-full flex justify-between items-center">
+      <div className="max-w-7xl w-full flex justify-between items-center px-2">
         <img
           className="w-12 h-12 cursor-pointer"
           src={`${process.env.PUBLIC_URL}/Asset/Logo/Logo.png`}
