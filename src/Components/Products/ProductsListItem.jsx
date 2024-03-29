@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import "tailwindcss/tailwind.css";
 import SnackBar from "../Snackbar/SnackBar";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const ProductsListItem = () => {
   const [input, setInput] = useState(""); //updating the input
   const [array, setArray] = useState([]); //setting array to map the result of api call when onclick
   const [defaultArray, setDefaultArray] = useState([]); //setting array to map the result of api call in default
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false); //displaying the default array when the search is not typed
+  const [showSnackBar, setShowSnackBar] = useState(false); //snackbar for showing error
+  const [hover, setHover] = useState(null); //hover setting for the div
 
   //handlechange event for input tag
   const handleChange = (e) => {
@@ -36,8 +40,9 @@ const ProductsListItem = () => {
 
       const data = await response.json();
       console.log(data);
-      setArray(data);
+      setArray(data); //setting fetched data to setarray
       setActive(true);
+      setShowSnackBar(data.length === 0);
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
@@ -45,7 +50,7 @@ const ProductsListItem = () => {
 
   useEffect(() => {
     console.log(array);
-    array.length === 0 ? setActive(false) : setActive(true);
+    array.length === 0 ? setActive(false) : setActive(true); //checking for default display
   }, [array]);
 
   useEffect(() => {
@@ -81,22 +86,61 @@ const ProductsListItem = () => {
         />
       </div>
       {active ? (
-        <div className="mt-2 max-w-7xl w-full bg-white flex flex-col flex-wrap py-3">
-          {array.map((ar, index) => (
-            <div
-              className="h-96 flex gap-3 items-center justify-between border-gray-300 p-3"
-              key={index}
-              style={{
-                borderBottomWidth: index === array.length - 1 ? "0px" : "0.1px",
-              }}
-            >
-              <img className="w-44" src={ar.image} alt={ar.category} />
-              <div className="flex flex-col gap-1">
-                <p>{ar.title}</p>
-                <p className="font-semibold self-start">&#36; {ar.price}</p>
+        <div className="mt-2 max-w-7xl w-full flex gap-4">
+          <div className="mt-2 w-96 bg-white"></div>
+          <div className="mt-2 bg-white flex flex-col flex-wrap py-3">
+            {array.map((ar, index) => (
+              <div
+                className={`min-h-96 flex gap-8 items-center justify-between border-gray-300 p-3 px-5 cursor-pointer`}
+                key={index}
+                style={{
+                  borderBottomWidth:
+                    index === array.length - 1 ? "0px" : "0.1px",
+                }}
+                onMouseEnter={() => setHover(ar.id)}
+                onMouseLeave={() => setHover(null)}
+              >
+                <div className="relative h-full">
+                  <img className="w-44 mt-6" src={ar.image} alt={ar.category} />
+                  <FavoriteIcon
+                    fontSize="small"
+                    className="absolute top-0 right-0 z-10 text-gray-300"
+                  />
+                </div>
+                <div className="flex flex-col gap-3 self-start flex-1">
+                  <p
+                    className={`text-lg font-semibold ${
+                      hover === ar.id ? "text-blue-600" : "text-black"
+                    }`}
+                  >
+                    {ar.title}
+                  </p>
+                  <p
+                    className={`flex gap-1 items-center justify-center p-1 rounded-md text-white w-16 ${
+                      ar.rating.rate >= 3.5
+                        ? "bg-green-700"
+                        : ar.rating.rate < 3.5 && ar.rating.rate >= 2.5
+                        ? "bg-orange-500"
+                        : "bg-red-500"
+                    }`}
+                  >
+                    {ar.rating.rate}
+                    <StarBorderIcon fontSize="small" />
+                  </p>
+                  <p>{ar.description}</p>
+                </div>
+                <div className="flex flex-col gap-1 self-start flex-1">
+                  <p className="font-medium self-start text-2xl">
+                    &#36; {ar.price}
+                  </p>
+                  <p className="text-sm">Free delivery</p>
+                  <p className="text-sm text-green-600 font-semibold">
+                    Save extra with combo offers
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       ) : (
         <div className="mt-2 max-w-7xl w-full bg-white py-3 font-ubuntu p-3">
@@ -124,7 +168,7 @@ const ProductsListItem = () => {
           </div>
         </div>
       )}
-      <SnackBar />
+      <SnackBar open={showSnackBar} />
     </div>
   );
 };

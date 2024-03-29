@@ -1,22 +1,21 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
+import React, { useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
-const SnackBar = () => {
-  const [open, setOpen] = useState(false);
+const SnackBar = ({ open }) => {
+  const [open1, setOpen1] = useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
+  useEffect(() => {
+    setOpen1(open);
+  }, [open]);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
 
-    setOpen(false);
+    setOpen1(false);
   };
 
   const action = (
@@ -34,9 +33,8 @@ const SnackBar = () => {
 
   return (
     <div>
-      <Button onClick={handleClick}>Open Snackbar</Button>
       <Snackbar
-        open={open}
+        open={open1}
         autoHideDuration={6000}
         onClose={handleClose}
         message="Typed Item is not in store"
