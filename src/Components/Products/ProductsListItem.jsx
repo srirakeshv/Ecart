@@ -4,6 +4,7 @@ import "tailwindcss/tailwind.css";
 import SnackBar from "../Snackbar/SnackBar";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import Skeleton from "@mui/material/Skeleton";
 
 const ProductsListItem = () => {
   const [input, setInput] = useState(""); //updating the input
@@ -12,6 +13,8 @@ const ProductsListItem = () => {
   const [active, setActive] = useState(false); //displaying the default array when the search is not typed
   const [showSnackBar, setShowSnackBar] = useState(false); //snackbar for showing error
   const [hover, setHover] = useState(null); //hover setting for the div
+  const [loading, setLoading] = useState(true); //setting the skeleton before loading apui contents
+  const [userLocation, setUserLocation] = useState(null); //finding and setting user loaction
 
   //handlechange event for input tag
   const handleChange = (e) => {
@@ -53,9 +56,33 @@ const ProductsListItem = () => {
     array.length === 0 ? setActive(false) : setActive(true); //checking for default display
   }, [array]);
 
+  //for default call of the products in case no input in search bar
   useEffect(() => {
     defaultCall();
   });
+
+  //fetching user location for updating the price rates of the products
+  useEffect(() => {
+    const fetchUserLocation = () => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          console.log("User location:", {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error fetching user location:", error);
+        }
+      );
+    };
+
+    fetchUserLocation();
+  }, []);
 
   //default call api when page is loaded
   const defaultCall = async () => {
@@ -63,6 +90,9 @@ const ProductsListItem = () => {
       const response = await fetch("https://fakestoreapi.com/products");
       const data = await response.json();
       // console.log(data);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
       setDefaultArray(data);
     } catch (error) {
       console.log("Error:", error);
@@ -152,16 +182,43 @@ const ProductsListItem = () => {
                 key={index}
                 style={{ borderWidth: "0.1px" }}
               >
-                <div className="w-28 flex justify-center items-center">
-                  <img
-                    className="w-full h-full"
-                    src={def.image}
-                    alt={def.title}
+                {loading ? (
+                  <Skeleton
+                    variant="rectangular"
+                    animation="wave"
+                    width={210}
+                    height={190}
                   />
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                  <p className="text-sm text-center">{def.title}</p>
-                  <p className="font-semibold">&#36; {def.price}</p>
+                ) : (
+                  <div className="w-28 flex justify-center items-center">
+                    <img
+                      className="w-full h-full"
+                      src={def.image}
+                      alt={def.title}
+                    />
+                  </div>
+                )}
+                <div className="flex flex-col items-center gap-1 w-full">
+                  {loading ? (
+                    <Skeleton
+                      variant="text"
+                      className="w-full"
+                      animation="wave"
+                      sx={{ fontSize: "1rem" }}
+                    />
+                  ) : (
+                    <p className="text-sm text-center">{def.title}</p>
+                  )}
+                  {loading ? (
+                    <Skeleton
+                      variant="text"
+                      className="w-full"
+                      animation="wave"
+                      sx={{ fontSize: "1rem" }}
+                    />
+                  ) : (
+                    <p className="font-semibold">&#36; {def.price}</p>
+                  )}
                 </div>
               </div>
             ))}

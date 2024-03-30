@@ -7,9 +7,11 @@ import {
   CreditCard,
 } from "lucide-react";
 import "tailwindcss/tailwind.css";
+import { useNavigate } from "react-router-dom";
 
 const NavbarLogin = () => {
-  const [hoverMenu, setHoverMenu] = useState(null);
+  const [hoverMenu, setHoverMenu] = useState(null); //hover setting
+  const navigate = useNavigate(); //navigating to another page
 
   return (
     <div className="absolute top-[50px] right-80 z-10 w-60 rounded-md shadow-sm shadow-slate-700 bg-white font-ubuntu">
@@ -18,7 +20,12 @@ const NavbarLogin = () => {
           className={`flex justify-between items-center p-3 border-b-2 border-slate-300`}
         >
           <span>New customer</span>
-          <span className="text-blue-700 font-semibold">Sign Up</span>
+          <span
+            className="text-blue-700 font-semibold cursor-pointer"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
+          </span>
         </li>
         <li
           className={`flex gap-2 items-center px-3 py-2 ${
