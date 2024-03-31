@@ -69,14 +69,14 @@ const ProductsListItem = () => {
       try {
         if (userLocation) {
           const response = await fetch(
-            `https://api.opencagedata.com/geocode/v1/json?q=${userLocation.latitude}%2C${userLocation.longitude}&key=268df2662a1b4fbf90e831071f49b0fc`
+            `http://api.geonames.org/countryCodeJSON?lat=${userLocation.latitude}&lng=${userLocation.longitude}&username=demo`
           );
           const data = await response.json();
-          // console.log("country", data);
-          const currencyCode = data.results[0].annotations.currency.iso_code;
-          setCurrency(currencyCode);
-          const symbols = data.results[0].annotations.currency.symbol;
-          setSymbol(symbols);
+          console.log("country", data);
+          // const currencyCode = data.results[0].annotations.currency.iso_code;
+          // setCurrency(currencyCode);
+          // const symbols = data.results[0].annotations.currency.symbol;
+          // setSymbol(symbols);
         }
       } catch (error) {
         console.log("Erroe", error);
@@ -89,13 +89,13 @@ const ProductsListItem = () => {
   useEffect(() => {
     const exchangeCurrency = async () => {
       try {
-        if (curency) {
-          const response = await fetch(`https://open.er-api.com/v6/latest/USD`);
-          const data = await response.json();
-          // console.log(data);
-          const updatedprice = data.rates[curency]; //passing the currency which we get using loaction
-          setConvertingPrice(updatedprice);
-        }
+        // if (curency) {
+        const response = await fetch(`https://open.er-api.com/v6/latest/USD`);
+        const data = await response.json();
+        console.log("hi", data);
+        // const updatedprice = data.rates[curency]; //passing the currency which we get using loaction
+        // setConvertingPrice(updatedprice);
+        // }
       } catch (error) {
         console.log("Error", error);
       }
