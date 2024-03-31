@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import TextField from "@mui/material/TextField";
+import {
+  isPossiblePhoneNumber,
+  isValidPhoneNumber,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
+import TransitionsSnackbar from "../Snackbar/SnackBar2";
 
 const Signup = () => {
   const [number, setNumber] = useState(""); //collecting number and upadating
+  const [hover, setHover] = useState(null); //setting hover status
+  const [otp, setOtp] = useState(""); //otp updation
+  const [valid, setValid] = useState(""); //checking valid or not
 
-  //   const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validNumber = isPossiblePhoneNumber(number);
+    setValid(validNumber);
+    // console.log(valid);
+  };
 
   useEffect(() => {
     console.log(number);
+    // console.log(valid);
   }, [number]);
   return (
     <div
@@ -29,24 +44,66 @@ const Signup = () => {
           />
         </div>
         <div className="w-full bg-white p-8">
-          <form className="w-full">
-            <TextField
-              id="standard-basic"
-              label="Enter Mobile number"
-              variant="standard"
-              className="w-full"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
-            />
+          <form className="w-full" onSubmit={handleSubmit}>
+            <div className="relative">
+              <TextField
+                id="standard-basic"
+                label="Enter Mobile number"
+                variant="standard"
+                className="w-full"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+              />
+              {valid && (
+                <p
+                  className={`absolute top-1/2 right-0 transform -translate-y-1/2 text-blue-600 font-medium ${
+                    hover === "change" ? "underline cursor-pointer" : ""
+                  }`}
+                  onMouseEnter={() => setHover("change")}
+                  onMouseLeave={() => setHover(null)}
+                  onClick={() => {
+                    setValid(false);
+                    setNumber("");
+                  }}
+                >
+                  change?
+                </p>
+              )}
+            </div>
+            {valid && (
+              <div className="flex justify-between items-center mt-7 mb-2">
+                <p className="text-sm">OTP sent to Mobile</p>
+                <p
+                  className={` text-blue-600 font-medium ${
+                    hover === "resend" ? "underline cursor-pointer" : ""
+                  }`}
+                  onMouseEnter={() => setHover("resend")}
+                  onMouseLeave={() => setHover(null)}
+                >
+                  Resend?
+                </p>
+              </div>
+            )}
+            {valid && (
+              <TextField
+                id="standard-basic"
+                label="Enter OTP"
+                variant="standard"
+                className="w-full"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            )}
             <button className="bg-orange-500 w-full p-2 text-white text-xl mt-8">
-              Continue
+              {valid ? "Signup" : "Continue"}
             </button>
           </form>
-          <button className="mt-3 w-full p-2 text-xl text-blue-500 shadow-md shadow-slate-300">
+          <button className="mt-3 w-full p-2 text-xl text-blue-600 shadow-md shadow-slate-300">
             Existing user? Log in
           </button>
         </div>
       </div>
+      <TransitionsSnackbar />
     </div>
   );
 };

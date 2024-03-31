@@ -5,6 +5,7 @@ import SnackBar from "../Snackbar/SnackBar";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Skeleton from "@mui/material/Skeleton";
+import countryCurrencyMapping from "../../ArrayList/CountryCurrency";
 
 const ProductsListItem = () => {
   const [input, setInput] = useState(""); //updating the input
@@ -16,6 +17,7 @@ const ProductsListItem = () => {
   const [loading, setLoading] = useState(true); //setting the skeleton before loading api contents
   const [loading1, setLoading1] = useState(true); //setting the skeleton before loading api contents
   const [userLocation, setUserLocation] = useState(null); //finding and setting user location
+  const [countryCode, setCountryCode] = useState(""); //setting and updating country code
   const [symbol, setSymbol] = useState(""); //setting dynamic symbols for different locations
   const [curency, setCurrency] = useState(""); //setting dynamic currency based on location
   const [convertingPrice, setConvertingPrice] = useState(""); //setting the price of currency based on location equal to 1 dollar
@@ -46,7 +48,9 @@ const ProductsListItem = () => {
       }
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
+      myLocation();
+      exchangeCurrency();
       setTimeout(() => {
         setLoading1(false);
       }, 3000);
@@ -65,43 +69,58 @@ const ProductsListItem = () => {
 
   //api call for converting current location to get iso code and the symbol of the currency
   useEffect(() => {
-    const myLocation = async () => {
-      try {
-        if (userLocation) {
-          const response = await fetch(
-            `http://api.geonames.org/countryCodeJSON?lat=${userLocation.latitude}&lng=${userLocation.longitude}&username=demo`
-          );
-          const data = await response.json();
-          console.log("country", data);
-          // const currencyCode = data.results[0].annotations.currency.iso_code;
-          // setCurrency(currencyCode);
-          // const symbols = data.results[0].annotations.currency.symbol;
-          // setSymbol(symbols);
-        }
-      } catch (error) {
-        console.log("Erroe", error);
-      }
-    };
     myLocation();
-  }, [userLocation]);
+  });
+
+  const myLocation = async () => {
+    try {
+      if (userLocation) {
+        const response = await fetch(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${userLocation.latitude}&lon=${userLocation.longitude}&apiKey=29b0964341b1449f8eb4a30a193fae10`
+        );
+        const data = await response.json();
+        // console.log("country", data);
+        const countrycode = data.features[0].properties.country_code;
+        const concode = countrycode.toUpperCase();
+        setCountryCode(concode);
+        // console.log(countryCode);
+        if (countryCode) {
+          for (const country in countryCurrencyMapping) {
+            if (country === countryCode) {
+              // console.log(countryCurrencyMapping[country]);
+              const cur = countryCurrencyMapping[country].code;
+              const sy = countryCurrencyMapping[country].symbol;
+              setCurrency(cur);
+              setSymbol(sy);
+            }
+          }
+        } else {
+          console.log("no country");
+        }
+      }
+    } catch (error) {
+      console.log("Erroe", error);
+    }
+  };
 
   //api call gives rate for all currencies equal to 1 dollar
   useEffect(() => {
-    const exchangeCurrency = async () => {
-      try {
-        // if (curency) {
+    exchangeCurrency();
+  });
+
+  const exchangeCurrency = async () => {
+    try {
+      if (curency) {
         const response = await fetch(`https://open.er-api.com/v6/latest/USD`);
         const data = await response.json();
-        console.log("hi", data);
-        // const updatedprice = data.rates[curency]; //passing the currency which we get using loaction
-        // setConvertingPrice(updatedprice);
-        // }
-      } catch (error) {
-        console.log("Error", error);
+        // console.log("hi", data);
+        const updatedprice = data.rates[curency]; //passing the currency which we get using loaction
+        setConvertingPrice(updatedprice);
       }
-    };
-    exchangeCurrency();
-  }, [curency]);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   //for default call of the products in case no input in search bar
   useEffect(() => {
@@ -257,7 +276,7 @@ const ProductsListItem = () => {
                     />
                   ) : (
                     <p className="font-medium self-start text-2xl">
-                      &#36; {ar.price}
+                      {symbol} {(ar.price * convertingPrice).toFixed(2)}
                     </p>
                   )}
                   {loading1 ? (
