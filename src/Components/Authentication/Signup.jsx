@@ -7,16 +7,22 @@ import {
   validatePhoneNumberLength,
 } from "libphonenumber-js";
 import TransitionsSnackbar from "../Snackbar/SnackBar2";
+import countryCurrencyMapping from "../../ArrayList/CountryCurrency";
 
 const Signup = () => {
   const [number, setNumber] = useState(""); //collecting number and upadating
   const [hover, setHover] = useState(null); //setting hover status
   const [otp, setOtp] = useState(""); //otp updation
   const [valid, setValid] = useState(""); //checking valid or not
+  const [countryCode, setCountryCode] = useState(""); //setting country code
+  const [userLocation, setUserLocation] = useState(null); //finding and setting user location
+  const [phoneCode, setPhoneCode] = useState(""); //phone code of country
+  const [active, setActive] = useState(false); //setting phone code active
 
+  //form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validNumber = isPossiblePhoneNumber(number);
+    const validNumber = isPossiblePhoneNumber(phoneCode + number);
     setValid(validNumber);
     // console.log(valid);
   };
@@ -25,6 +31,69 @@ const Signup = () => {
     console.log(number);
     // console.log(valid);
   }, [number]);
+
+  //fetching user location for updating the price rates of the products
+  useEffect(() => {
+    const fetchUserLocation = () => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          // console.log("User location:", {
+          //   latitude: position.coords.latitude,
+          //   longitude: position.coords.longitude,
+          // });
+        },
+        (error) => {
+          console.error("Error fetching user location:", error);
+        }
+      );
+    };
+
+    fetchUserLocation();
+  }, []);
+
+  //api call for converting current location to get iso code and the symbol of the currency
+  useEffect(() => {
+    myLocation();
+  });
+
+  const myLocation = async () => {
+    try {
+      if (userLocation) {
+        const response = await fetch(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${userLocation.latitude}&lon=${userLocation.longitude}&apiKey=29b0964341b1449f8eb4a30a193fae10`
+        );
+        const data = await response.json();
+        // console.log("country", data);
+        const countrycode = data.features[0].properties.country_code;
+        const concode = countrycode.toUpperCase();
+        setCountryCode(concode);
+        // console.log(countryCode);
+        if (countryCode) {
+          for (const country in countryCurrencyMapping) {
+            if (country === countryCode) {
+              // console.log(countryCurrencyMapping[country]);
+              const cod = countryCurrencyMapping[country].phoneCode;
+              setPhoneCode(cod);
+            }
+          }
+        } else {
+          console.log("no country");
+        }
+      }
+    } catch (error) {
+      console.log("Erroe", error);
+    }
+  };
+
+  //checking the input value length for updating the active status
+  useEffect(() => {
+    setActive(number.length === 0 ? false : true);
+  }, [number]);
+
   return (
     <div
       className="flex justify-center font-ubuntu p-3 bg-grey1"
@@ -52,8 +121,18 @@ const Signup = () => {
                 variant="standard"
                 className="w-full"
                 value={number}
-                onChange={(e) => setNumber(e.target.value)}
+                onChange={(e) => {
+                  setNumber(e.target.value);
+                }}
+                InputProps={{
+                  style: { paddingLeft: active ? "40px" : "" },
+                }}
               />
+              {active && (
+                <span className="absolute bottom-[5.6px] left-2">
+                  {phoneCode}
+                </span>
+              )}
               {valid && (
                 <p
                   className={`absolute top-1/2 right-0 transform -translate-y-1/2 text-blue-600 font-medium ${
@@ -103,7 +182,10 @@ const Signup = () => {
           </button>
         </div>
       </div>
-      <TransitionsSnackbar />
+      <TransitionsSnackbar
+        set={valid ? true : false}
+        setNumber={number ? number : "no"}
+      />
     </div>
   );
 };

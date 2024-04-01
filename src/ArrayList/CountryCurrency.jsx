@@ -1,255 +1,552 @@
-// Define a mapping object for country abbreviations to ISO currency codes and symbols
 const countryCurrencyMapping = {
-  AF: { code: "AFN", symbol: "؋" }, // Afghanistan
-  AX: { code: "EUR", symbol: "€" }, // Åland Islands
-  AL: { code: "ALL", symbol: "L" }, // Albania
-  DZ: { code: "DZD", symbol: "د.ج" }, // Algeria
-  AS: { code: "USD", symbol: "$" }, // American Samoa
-  AD: { code: "EUR", symbol: "€" }, // Andorra
-  AO: { code: "AOA", symbol: "Kz" }, // Angola
-  AI: { code: "XCD", symbol: "$" }, // Anguilla
-  AQ: { code: "", symbol: "" }, // Antarctica (No specific currency)
-  AG: { code: "XCD", symbol: "$" }, // Antigua and Barbuda
-  AR: { code: "ARS", symbol: "$" }, // Argentina
-  AM: { code: "AMD", symbol: "֏" }, // Armenia
-  AW: { code: "AWG", symbol: "ƒ" }, // Aruba
-  AU: { code: "AUD", symbol: "$" }, // Australia
-  AT: { code: "EUR", symbol: "€" }, // Austria
-  AZ: { code: "AZN", symbol: "₼" }, // Azerbaijan
-  BS: { code: "BSD", symbol: "$" }, // Bahamas
-  BH: { code: "BHD", symbol: "BD" }, // Bahrain
-  BD: { code: "BDT", symbol: "৳" }, // Bangladesh
-  BB: { code: "BBD", symbol: "$" }, // Barbados
-  BY: { code: "BYN", symbol: "Br" }, // Belarus
-  BE: { code: "EUR", symbol: "€" }, // Belgium
-  BZ: { code: "BZD", symbol: "$" }, // Belize
-  BJ: { code: "XOF", symbol: "Fr" }, // Benin
-  BM: { code: "BMD", symbol: "$" }, // Bermuda
-  BT: { code: "BTN", symbol: "Nu." }, // Bhutan
-  BO: { code: "BOB", symbol: "Bs." }, // Bolivia (Plurinational State of)
-  BQ: { code: "USD", symbol: "$" }, // Bonaire, Sint Eustatius and Saba
-  BA: { code: "BAM", symbol: "KM" }, // Bosnia and Herzegovina
-  BW: { code: "BWP", symbol: "P" }, // Botswana
-  BV: { code: "NOK", symbol: "kr" }, // Bouvet Island
-  BR: { code: "BRL", symbol: "R$" }, // Brazil
-  IO: { code: "USD", symbol: "$" }, // British Indian Ocean Territory
-  BN: { code: "BND", symbol: "$" }, // Brunei Darussalam
-  BG: { code: "BGN", symbol: "лв" }, // Bulgaria
-  BF: { code: "XOF", symbol: "Fr" }, // Burkina Faso
-  BI: { code: "BIF", symbol: "Fr" }, // Burundi
-  CV: { code: "CVE", symbol: "Esc" }, // Cabo Verde
-  KH: { code: "KHR", symbol: "៛" }, // Cambodia
-  CM: { code: "XAF", symbol: "Fr" }, // Cameroon
-  CA: { code: "CAD", symbol: "$" }, // Canada
-  KY: { code: "KYD", symbol: "$" }, // Cayman Islands
-  CF: { code: "XAF", symbol: "Fr" }, // Central African Republic
-  TD: { code: "XAF", symbol: "Fr" }, // Chad
-  CL: { code: "CLP", symbol: "$" }, // Chile
-  CN: { code: "CNY", symbol: "¥" }, // China
-  CX: { code: "AUD", symbol: "$" }, // Christmas Island
-  CC: { code: "AUD", symbol: "$" }, // Cocos (Keeling) Islands
-  CO: { code: "COP", symbol: "$" }, // Colombia
-  KM: { code: "KMF", symbol: "Fr" }, // Comoros
-  CG: { code: "XAF", symbol: "Fr" }, // Congo
-  CD: { code: "CDF", symbol: "Fr" }, // Congo (Democratic Republic of the)
-  CK: { code: "NZD", symbol: "$" }, // Cook Islands
-  CR: { code: "CRC", symbol: "₡" }, // Costa Rica
-  CI: { code: "XOF", symbol: "Fr" }, // Côte d'Ivoire
-  HR: { code: "HRK", symbol: "kn" }, // Croatia
-  CU: { code: "CUP", symbol: "$" }, // Cuba
-  CW: { code: "ANG", symbol: "ƒ" }, // Curaçao
-  CY: { code: "EUR", symbol: "€" }, // Cyprus
-  CZ: { code: "CZK", symbol: "Kč" }, // Czech Republic
-  DK: { code: "DKK", symbol: "kr" }, // Denmark
-  DJ: { code: "DJF", symbol: "Fr" }, // Djibouti
-  DM: { code: "XCD", symbol: "$" }, // Dominica
-  DO: { code: "DOP", symbol: "RD$" }, // Dominican Republic
-  EC: { code: "USD", symbol: "$" }, // Ecuador
-  EG: { code: "EGP", symbol: "£" }, // Egypt
-  SV: { code: "USD", symbol: "$" }, // El Salvador
-  GQ: { code: "XAF", symbol: "Fr" }, // Equatorial Guinea
-  ER: { code: "ERN", symbol: "Nfk" }, // Eritrea
-  EE: { code: "EUR", symbol: "€" }, // Estonia
-  ET: { code: "ETB", symbol: "Br" }, // Ethiopia
-  FK: { code: "FKP", symbol: "£" }, // Falkland Islands (Malvinas)
-  FO: { code: "DKK", symbol: "kr" }, // Faroe Islands
-  FJ: { code: "FJD", symbol: "$" }, // Fiji
-  FI: { code: "EUR", symbol: "€" }, // Finland
-  FR: { code: "EUR", symbol: "€" }, // France
-  GF: { code: "EUR", symbol: "€" }, // French Guiana
-  PF: { code: "XPF", symbol: "Fr" }, // French Polynesia
-  TF: { code: "EUR", symbol: "€" }, // French Southern Territories
-  GA: { code: "XAF", symbol: "Fr" }, // Gabon
-  GM: { code: "GMD", symbol: "D" }, // Gambia
-  GE: { code: "GEL", symbol: "ლ" }, // Georgia
-  DE: { code: "EUR", symbol: "€" }, // Germany
-  GH: { code: "GHS", symbol: "₵" }, // Ghana
-  GI: { code: "GIP", symbol: "£" }, // Gibraltar
-  GR: { code: "EUR", symbol: "€" }, // Greece
-  GL: { code: "DKK", symbol: "kr" }, // Greenland
-  GD: { code: "XCD", symbol: "$" }, // Grenada
-  GP: { code: "EUR", symbol: "€" }, // Guadeloupe
-  GU: { code: "USD", symbol: "$" }, // Guam
-  GT: { code: "GTQ", symbol: "Q" }, // Guatemala
-  GG: { code: "GBP", symbol: "£" }, // Guernsey
-  GN: { code: "GNF", symbol: "Fr" }, // Guinea
-  GW: { code: "XOF", symbol: "Fr" }, // Guinea-Bissau
-  GY: { code: "GYD", symbol: "$" }, // Guyana
-  HT: { code: "HTG", symbol: "G" }, // Haiti
-  HM: { code: "AUD", symbol: "$" }, // Heard Island and McDonald Islands
-  VA: { code: "EUR", symbol: "€" }, // Holy See
-  HN: { code: "HNL", symbol: "L" }, // Honduras
-  HK: { code: "HKD", symbol: "$" }, // Hong Kong
-  HU: { code: "HUF", symbol: "Ft" }, // Hungary
-  IS: { code: "ISK", symbol: "kr" }, // Iceland
-  IN: { code: "INR", symbol: "₹" }, // India
-  ID: { code: "IDR", symbol: "Rp" }, // Indonesia
-  IR: { code: "IRR", symbol: "﷼" }, // Iran (Islamic Republic of)
-  IQ: { code: "IQD", symbol: "ع.د" }, // Iraq
-  IE: { code: "EUR", symbol: "€" }, // Ireland
-  IM: { code: "GBP", symbol: "£" }, // Isle of Man
-  IL: { code: "ILS", symbol: "₪" }, // Israel
-  IT: { code: "EUR", symbol: "€" }, // Italy
-  JM: { code: "JMD", symbol: "J$" }, // Jamaica
-  JP: { code: "JPY", symbol: "¥" }, // Japan
-  JE: { code: "GBP", symbol: "£" }, // Jersey
-  JO: { code: "JOD", symbol: "د.ا" }, // Jordan
-  KZ: { code: "KZT", symbol: "₸" }, // Kazakhstan
-  KE: { code: "KES", symbol: "KSh" }, // Kenya
-  KI: { code: "AUD", symbol: "$" }, // Kiribati
-  KP: { code: "KPW", symbol: "₩" }, // Korea (Democratic People's Republic of)
-  KR: { code: "KRW", symbol: "₩" }, // Korea (Republic of)
-  KW: { code: "KWD", symbol: "د.ك" }, // Kuwait
-  KG: { code: "KGS", symbol: "лв" }, // Kyrgyzstan
-  LA: { code: "LAK", symbol: "₭" }, // Lao People's Democratic Republic
-  LV: { code: "EUR", symbol: "€" }, // Latvia
-  LB: { code: "LBP", symbol: "ل.ل" }, // Lebanon
-  LS: { code: "LSL", symbol: "L" }, // Lesotho
-  LR: { code: "LRD", symbol: "$" }, // Liberia
-  LY: { code: "LYD", symbol: "ل.د" }, // Libya
-  LI: { code: "CHF", symbol: "CHF" }, // Liechtenstein
-  LT: { code: "EUR", symbol: "€" }, // Lithuania
-  LU: { code: "EUR", symbol: "€" }, // Luxembourg
-  MO: { code: "MOP", symbol: "MOP$" }, // Macao
-  MK: { code: "MKD", symbol: "ден" }, // Macedonia (the former Yugoslav Republic of)
-  MG: { code: "MGA", symbol: "Ar" }, // Madagascar
-  MW: { code: "MWK", symbol: "MK" }, // Malawi
-  MY: { code: "MYR", symbol: "RM" }, // Malaysia
-  MV: { code: "MVR", symbol: "ރ." }, // Maldives
-  ML: { code: "XOF", symbol: "Fr" }, // Mali
-  MT: { code: "EUR", symbol: "€" }, // Malta
-  MH: { code: "USD", symbol: "$" }, // Marshall Islands
-  MQ: { code: "EUR", symbol: "€" }, // Martinique
-  MR: { code: "MRU", symbol: "UM" }, // Mauritania
-  MU: { code: "MUR", symbol: "₨" }, // Mauritius
-  YT: { code: "EUR", symbol: "€" }, // Mayotte
-  MX: { code: "MXN", symbol: "$" }, // Mexico
-  FM: { code: "USD", symbol: "$" }, // Micronesia (Federated States of)
-  MD: { code: "MDL", symbol: "L" }, // Moldova (Republic of)
-  MC: { code: "EUR", symbol: "€" }, // Monaco
-  MN: { code: "MNT", symbol: "₮" }, // Mongolia
-  ME: { code: "EUR", symbol: "€" }, // Montenegro
-  MS: { code: "XCD", symbol: "$" }, // Montserrat
-  MA: { code: "MAD", symbol: "د.م." }, // Morocco
-  MZ: { code: "MZN", symbol: "MT" }, // Mozambique
-  MM: { code: "MMK", symbol: "K" }, // Myanmar
-  NA: { code: "NAD", symbol: "N$" }, // Namibia
-  NR: { code: "AUD", symbol: "$" }, // Nauru
-  NP: { code: "NPR", symbol: "₨" }, // Nepal
-  NL: { code: "EUR", symbol: "€" }, // Netherlands
-  NC: { code: "XPF", symbol: "Fr" }, // New Caledonia
-  NZ: { code: "NZD", symbol: "$" }, // New Zealand
-  NI: { code: "NIO", symbol: "C$" }, // Nicaragua
-  NE: { code: "XOF", symbol: "Fr" }, // Niger
-  NG: { code: "NGN", symbol: "₦" }, // Nigeria
-  NU: { code: "NZD", symbol: "$" }, // Niue
-  NF: { code: "AUD", symbol: "$" }, // Norfolk Island
-  MP: { code: "USD", symbol: "$" }, // Northern Mariana Islands
-  NO: { code: "NOK", symbol: "kr" }, // Norway
-  OM: { code: "OMR", symbol: "ر.ع." }, // Oman
-  PK: { code: "PKR", symbol: "₨" }, // Pakistan
-  PW: { code: "USD", symbol: "$" }, // Palau
-  PS: { code: "ILS", symbol: "₪" }, // Palestine, State of
-  PA: { code: "PAB", symbol: "B/." }, // Panama
-  PG: { code: "PGK", symbol: "K" }, // Papua New Guinea
-  PY: { code: "PYG", symbol: "₲" }, // Paraguay
-  PE: { code: "PEN", symbol: "S/." }, // Peru
-  PH: { code: "PHP", symbol: "₱" }, // Philippines
-  PN: { code: "NZD", symbol: "$" }, // Pitcairn
-  PL: { code: "PLN", symbol: "zł" }, // Poland
-  PT: { code: "EUR", symbol: "€" }, // Portugal
-  PR: { code: "USD", symbol: "$" }, // Puerto Rico
-  QA: { code: "QAR", symbol: "ر.ق" }, // Qatar
-  RE: { code: "EUR", symbol: "€" }, // Réunion
-  RO: { code: "RON", symbol: "lei" }, // Romania
-  RU: { code: "RUB", symbol: "₽" }, // Russian Federation
-  RW: { code: "RWF", symbol: "Fr" }, // Rwanda
-  BL: { code: "EUR", symbol: "€" }, // Saint Barthélemy
-  SH: { code: "SHP", symbol: "£" }, // Saint Helena, Ascension and Tristan da Cunha
-  KN: { code: "XCD", symbol: "$" }, // Saint Kitts and Nevis
-  LC: { code: "XCD", symbol: "$" }, // Saint Lucia
-  MF: { code: "EUR", symbol: "€" }, // Saint Martin (French part)
-  PM: { code: "EUR", symbol: "€" }, // Saint Pierre and Miquelon
-  VC: { code: "XCD", symbol: "$" }, // Saint Vincent and the Grenadines
-  WS: { code: "WST", symbol: "T" }, // Samoa
-  SM: { code: "EUR", symbol: "€" }, // San Marino
-  ST: { code: "STN", symbol: "Db" }, // Sao Tome and Principe
-  SA: { code: "SAR", symbol: "ر.س" }, // Saudi Arabia
-  SN: { code: "XOF", symbol: "Fr" }, // Senegal
-  RS: { code: "RSD", symbol: "РСД" }, // Serbia
-  SC: { code: "SCR", symbol: "SRe" }, // Seychelles
-  SL: { code: "SLL", symbol: "Le" }, // Sierra Leone
-  SG: { code: "SGD", symbol: "$" }, // Singapore
-  SX: { code: "ANG", symbol: "ƒ" }, // Sint Maarten (Dutch part)
-  SK: { code: "EUR", symbol: "€" }, // Slovakia
-  SI: { code: "EUR", symbol: "€" }, // Slovenia
-  SB: { code: "SBD", symbol: "SI$" }, // Solomon Islands
-  SO: { code: "SOS", symbol: "Sh" }, // Somalia
-  ZA: { code: "ZAR", symbol: "R" }, // South Africa
-  GS: { code: "GBP", symbol: "£" }, // South Georgia and the South Sandwich Islands
-  SS: { code: "SSP", symbol: "£" }, // South Sudan
-  ES: { code: "EUR", symbol: "€" }, // Spain
-  LK: { code: "LKR", symbol: "Rs" }, // Sri Lanka
-  SD: { code: "SDG", symbol: "ج.س." }, // Sudan
-  SR: { code: "SRD", symbol: "$" }, // Suriname
-  SJ: { code: "NOK", symbol: "kr" }, // Svalbard and Jan Mayen
-  SZ: { code: "SZL", symbol: "L" }, // Swaziland
-  SE: { code: "SEK", symbol: "kr" }, // Sweden
-  CH: { code: "CHF", symbol: "CHF" }, // Switzerland
-  SY: { code: "SYP", symbol: "£" }, // Syrian Arab Republic
-  TW: { code: "TWD", symbol: "NT$" }, // Taiwan, Province of China
-  TJ: { code: "TJS", symbol: "ЅМ" }, // Tajikistan
-  TZ: { code: "TZS", symbol: "TSh" }, // Tanzania, United Republic of
-  TH: { code: "THB", symbol: "฿" }, // Thailand
-  TL: { code: "USD", symbol: "$" }, // Timor-Leste
-  TG: { code: "XOF", symbol: "Fr" }, // Togo
-  TK: { code: "NZD", symbol: "$" }, // Tokelau
-  TO: { code: "TOP", symbol: "T$" }, // Tonga
-  TT: { code: "TTD", symbol: "TT$" }, // Trinidad and Tobago
-  TN: { code: "TND", symbol: "د.ت" }, // Tunisia
-  TR: { code: "TRY", symbol: "₺" }, // Turkey
-  TM: { code: "TMT", symbol: "m" }, // Turkmenistan
-  TC: { code: "USD", symbol: "$" }, // Turks and Caicos Islands
-  TV: { code: "AUD", symbol: "$" }, // Tuvalu
-  UG: { code: "UGX", symbol: "USh" }, // Uganda
-  UA: { code: "UAH", symbol: "₴" }, // Ukraine
-  AE: { code: "AED", symbol: "د.إ" }, // United Arab Emirates
-  GB: { code: "GBP", symbol: "£" }, // United Kingdom of Great Britain and Northern Ireland
-  US: { code: "USD", symbol: "$" }, // United States of America
-  UM: { code: "USD", symbol: "$" }, // United States Minor Outlying Islands
-  UY: { code: "UYU", symbol: "$" }, // Uruguay
-  UZ: { code: "UZS", symbol: "UZS" }, // Uzbekistan
-  VU: { code: "VUV", symbol: "Vt" }, // Vanuatu
-  VE: { code: "VES", symbol: "Bs.S." }, // Venezuela (Bolivarian Republic of)
-  VN: { code: "VND", symbol: "₫" }, // Viet Nam
-  VG: { code: "USD", symbol: "$" }, // Virgin Islands (British)
-  VI: { code: "USD", symbol: "$" }, // Virgin Islands (U.S.)
-  WF: { code: "XPF", symbol: "Fr" }, // Wallis and Futuna
-  EH: { code: "MAD", symbol: "د.م." }, // Western Sahara
-  YE: { code: "YER", symbol: "﷼" }, // Yemen
-  ZM: { code: "ZMW", symbol: "ZK" }, // Zambia
-  ZW: { code: "ZWL", symbol: "$" }, // Zimbabwe
-  // Add more mappings as needed
+  AF: { code: "AFN", symbol: "؋", country: "Afghanistan", phoneCode: "+93" },
+  AX: { code: "EUR", symbol: "€", country: "Åland Islands", phoneCode: "+358" },
+  AL: { code: "ALL", symbol: "L", country: "Albania", phoneCode: "+355" },
+  DZ: { code: "DZD", symbol: "د.ج", country: "Algeria", phoneCode: "+213" },
+  AS: { code: "USD", symbol: "$", country: "American Samoa", phoneCode: "+1" },
+  AD: { code: "EUR", symbol: "€", country: "Andorra", phoneCode: "+376" },
+  AO: { code: "AOA", symbol: "Kz", country: "Angola", phoneCode: "+244" },
+  AI: { code: "XCD", symbol: "$", country: "Anguilla", phoneCode: "+1" },
+  AQ: { code: "", symbol: "", country: "Antarctica", phoneCode: "" },
+  AG: {
+    code: "XCD",
+    symbol: "$",
+    country: "Antigua and Barbuda",
+    phoneCode: "+1",
+  },
+  AR: { code: "ARS", symbol: "$", country: "Argentina", phoneCode: "+54" },
+  AM: { code: "AMD", symbol: "֏", country: "Armenia", phoneCode: "+374" },
+  AW: { code: "AWG", symbol: "ƒ", country: "Aruba", phoneCode: "+297" },
+  AU: { code: "AUD", symbol: "$", country: "Australia", phoneCode: "+61" },
+  AT: { code: "EUR", symbol: "€", country: "Austria", phoneCode: "+43" },
+  AZ: { code: "AZN", symbol: "₼", country: "Azerbaijan", phoneCode: "+994" },
+  BS: { code: "BSD", symbol: "$", country: "Bahamas", phoneCode: "+1" },
+  BH: { code: "BHD", symbol: "BD", country: "Bahrain", phoneCode: "+973" },
+  BD: { code: "BDT", symbol: "৳", country: "Bangladesh", phoneCode: "+880" },
+  BB: { code: "BBD", symbol: "$", country: "Barbados", phoneCode: "+1" },
+  BY: { code: "BYN", symbol: "Br", country: "Belarus", phoneCode: "+375" },
+  BE: { code: "EUR", symbol: "€", country: "Belgium", phoneCode: "+32" },
+  BZ: { code: "BZD", symbol: "$", country: "Belize", phoneCode: "+501" },
+  BJ: { code: "XOF", symbol: "Fr", country: "Benin", phoneCode: "+229" },
+  BM: { code: "BMD", symbol: "$", country: "Bermuda", phoneCode: "+1" },
+  BT: { code: "BTN", symbol: "Nu.", country: "Bhutan", phoneCode: "+975" },
+  BO: {
+    code: "BOB",
+    symbol: "Bs.",
+    country: "Bolivia (Plurinational State of)",
+    phoneCode: "+591",
+  },
+  BQ: {
+    code: "USD",
+    symbol: "$",
+    country: "Bonaire, Sint Eustatius and Saba",
+    phoneCode: "+599",
+  },
+  BA: {
+    code: "BAM",
+    symbol: "KM",
+    country: "Bosnia and Herzegovina",
+    phoneCode: "+387",
+  },
+  BW: { code: "BWP", symbol: "P", country: "Botswana", phoneCode: "+267" },
+  BV: { code: "NOK", symbol: "kr", country: "Bouvet Island", phoneCode: "" },
+  BR: { code: "BRL", symbol: "R$", country: "Brazil", phoneCode: "+55" },
+  IO: {
+    code: "USD",
+    symbol: "$",
+    country: "British Indian Ocean Territory",
+    phoneCode: "+246",
+  },
+  BN: {
+    code: "BND",
+    symbol: "$",
+    country: "Brunei Darussalam",
+    phoneCode: "+673",
+  },
+  BG: { code: "BGN", symbol: "лв", country: "Bulgaria", phoneCode: "+359" },
+  BF: { code: "XOF", symbol: "Fr", country: "Burkina Faso", phoneCode: "+226" },
+  BI: { code: "BIF", symbol: "Fr", country: "Burundi", phoneCode: "+257" },
+  CV: { code: "CVE", symbol: "Esc", country: "Cabo Verde", phoneCode: "+238" },
+  KH: { code: "KHR", symbol: "៛", country: "Cambodia", phoneCode: "+855" },
+  CM: { code: "XAF", symbol: "Fr", country: "Cameroon", phoneCode: "+237" },
+  CA: { code: "CAD", symbol: "$", country: "Canada", phoneCode: "+1" },
+  KY: { code: "KYD", symbol: "$", country: "Cayman Islands", phoneCode: "+1" },
+  CF: {
+    code: "XAF",
+    symbol: "Fr",
+    country: "Central African Republic",
+    phoneCode: "+236",
+  },
+  TD: { code: "XAF", symbol: "Fr", country: "Chad", phoneCode: "+235" },
+  CL: { code: "CLP", symbol: "$", country: "Chile", phoneCode: "+56" },
+  CN: { code: "CNY", symbol: "¥", country: "China", phoneCode: "+86" },
+  CX: {
+    code: "AUD",
+    symbol: "$",
+    country: "Christmas Island",
+    phoneCode: "+61",
+  },
+  CC: {
+    code: "AUD",
+    symbol: "$",
+    country: "Cocos (Keeling) Islands",
+    phoneCode: "+61",
+  },
+  CO: { code: "COP", symbol: "$", country: "Colombia", phoneCode: "+57" },
+  KM: { code: "KMF", symbol: "Fr", country: "Comoros", phoneCode: "+269" },
+  CG: { code: "XAF", symbol: "Fr", country: "Congo", phoneCode: "+242" },
+  CD: {
+    code: "CDF",
+    symbol: "Fr",
+    country: "Congo (Democratic Republic of the)",
+    phoneCode: "+243",
+  },
+  CK: { code: "NZD", symbol: "$", country: "Cook Islands", phoneCode: "+682" },
+  CR: { code: "CRC", symbol: "₡", country: "Costa Rica", phoneCode: "+506" },
+  CI: {
+    code: "XOF",
+    symbol: "Fr",
+    country: "Côte d'Ivoire",
+    phoneCode: "+225",
+  },
+  HR: { code: "HRK", symbol: "kn", country: "Croatia", phoneCode: "+385" },
+  CU: { code: "CUP", symbol: "$", country: "Cuba", phoneCode: "+53" },
+  CW: { code: "ANG", symbol: "ƒ", country: "Curaçao", phoneCode: "+599" },
+  CY: { code: "EUR", symbol: "€", country: "Cyprus", phoneCode: "+357" },
+  CZ: {
+    code: "CZK",
+    symbol: "Kč",
+    country: "Czech Republic",
+    phoneCode: "+420",
+  },
+  DK: { code: "DKK", symbol: "kr", country: "Denmark", phoneCode: "+45" },
+  DJ: { code: "DJF", symbol: "Fr", country: "Djibouti", phoneCode: "+253" },
+  DM: { code: "XCD", symbol: "$", country: "Dominica", phoneCode: "+1" },
+  DO: {
+    code: "DOP",
+    symbol: "$",
+    country: "Dominican Republic",
+    phoneCode: "+1",
+  },
+  EC: { code: "USD", symbol: "$", country: "Ecuador", phoneCode: "+593" },
+  EG: { code: "EGP", symbol: "E£", country: "Egypt", phoneCode: "+20" },
+  SV: { code: "USD", symbol: "$", country: "El Salvador", phoneCode: "+503" },
+  GQ: {
+    code: "XAF",
+    symbol: "Fr",
+    country: "Equatorial Guinea",
+    phoneCode: "+240",
+  },
+  ER: { code: "ERN", symbol: "Nfk", country: "Eritrea", phoneCode: "+291" },
+  EE: { code: "EUR", symbol: "€", country: "Estonia", phoneCode: "+372" },
+  ET: { code: "ETB", symbol: "Br", country: "Ethiopia", phoneCode: "+251" },
+  FK: {
+    code: "FKP",
+    symbol: "£",
+    country: "Falkland Islands (Malvinas)",
+    phoneCode: "+500",
+  },
+  FO: {
+    code: "DKK",
+    symbol: "kr",
+    country: "Faroe Islands",
+    phoneCode: "+298",
+  },
+  FJ: { code: "FJD", symbol: "$", country: "Fiji", phoneCode: "+679" },
+  FI: { code: "EUR", symbol: "€", country: "Finland", phoneCode: "+358" },
+  FR: { code: "EUR", symbol: "€", country: "France", phoneCode: "+33" },
+  GF: { code: "EUR", symbol: "€", country: "French Guiana", phoneCode: "+594" },
+  PF: {
+    code: "XPF",
+    symbol: "Fr",
+    country: "French Polynesia",
+    phoneCode: "+689",
+  },
+  TF: {
+    code: "EUR",
+    symbol: "€",
+    country: "French Southern Territories",
+    phoneCode: "",
+  },
+  GA: { code: "XAF", symbol: "Fr", country: "Gabon", phoneCode: "+241" },
+  GM: { code: "GMD", symbol: "D", country: "Gambia", phoneCode: "+220" },
+  GE: { code: "GEL", symbol: "ლ", country: "Georgia", phoneCode: "+995" },
+  DE: { code: "EUR", symbol: "€", country: "Germany", phoneCode: "+49" },
+  GH: { code: "GHS", symbol: "₵", country: "Ghana", phoneCode: "+233" },
+  GI: { code: "GIP", symbol: "£", country: "Gibraltar", phoneCode: "+350" },
+  GR: { code: "EUR", symbol: "€", country: "Greece", phoneCode: "+30" },
+  GL: { code: "DKK", symbol: "kr", country: "Greenland", phoneCode: "+299" },
+  GD: { code: "XCD", symbol: "$", country: "Grenada", phoneCode: "+1" },
+  GP: { code: "EUR", symbol: "€", country: "Guadeloupe", phoneCode: "+590" },
+  GU: { code: "USD", symbol: "$", country: "Guam", phoneCode: "+1" },
+  GT: { code: "GTQ", symbol: "Q", country: "Guatemala", phoneCode: "+502" },
+  GG: { code: "GBP", symbol: "£", country: "Guernsey", phoneCode: "+44" },
+  GN: { code: "GNF", symbol: "Fr", country: "Guinea", phoneCode: "+224" },
+  GW: {
+    code: "XOF",
+    symbol: "Fr",
+    country: "Guinea-Bissau",
+    phoneCode: "+245",
+  },
+  GY: { code: "GYD", symbol: "$", country: "Guyana", phoneCode: "+592" },
+  HT: { code: "HTG", symbol: "G", country: "Haiti", phoneCode: "+509" },
+  HM: {
+    code: "AUD",
+    symbol: "$",
+    country: "Heard Island and McDonald Islands",
+    phoneCode: "",
+  },
+  VA: { code: "EUR", symbol: "€", country: "Holy See", phoneCode: "+379" },
+  HN: { code: "HNL", symbol: "L", country: "Honduras", phoneCode: "+504" },
+  HK: { code: "HKD", symbol: "$", country: "Hong Kong", phoneCode: "+852" },
+  HU: { code: "HUF", symbol: "Ft", country: "Hungary", phoneCode: "+36" },
+  IS: { code: "ISK", symbol: "kr", country: "Iceland", phoneCode: "+354" },
+  IN: { code: "INR", symbol: "₹", country: "India", phoneCode: "+91" },
+  ID: { code: "IDR", symbol: "Rp", country: "Indonesia", phoneCode: "+62" },
+  IR: {
+    code: "IRR",
+    symbol: "﷼",
+    country: "Iran (Islamic Republic of)",
+    phoneCode: "+98",
+  },
+  IQ: { code: "IQD", symbol: "ع.د", country: "Iraq", phoneCode: "+964" },
+  IE: { code: "EUR", symbol: "€", country: "Ireland", phoneCode: "+353" },
+  IM: { code: "GBP", symbol: "£", country: "Isle of Man", phoneCode: "+44" },
+  IL: { code: "ILS", symbol: "₪", country: "Israel", phoneCode: "+972" },
+  IT: { code: "EUR", symbol: "€", country: "Italy", phoneCode: "+39" },
+  JM: { code: "JMD", symbol: "$", country: "Jamaica", phoneCode: "+1" },
+  JP: { code: "JPY", symbol: "¥", country: "Japan", phoneCode: "+81" },
+  JE: { code: "GBP", symbol: "£", country: "Jersey", phoneCode: "+44" },
+  JO: { code: "JOD", symbol: "JD", country: "Jordan", phoneCode: "+962" },
+  KZ: { code: "KZT", symbol: "₸", country: "Kazakhstan", phoneCode: "+7" },
+  KE: { code: "KES", symbol: "KSh", country: "Kenya", phoneCode: "+254" },
+  KI: { code: "AUD", symbol: "$", country: "Kiribati", phoneCode: "+686" },
+  KP: {
+    code: "KPW",
+    symbol: "₩",
+    country: "Korea (Democratic People's Republic of)",
+    phoneCode: "+850",
+  },
+  KR: {
+    code: "KRW",
+    symbol: "₩",
+    country: "Korea (Republic of)",
+    phoneCode: "+82",
+  },
+  KW: { code: "KWD", symbol: "KD", country: "Kuwait", phoneCode: "+965" },
+  KG: { code: "KGS", symbol: "с", country: "Kyrgyzstan", phoneCode: "+996" },
+  LA: {
+    code: "LAK",
+    symbol: "₭",
+    country: "Lao People's Democratic Republic",
+    phoneCode: "+856",
+  },
+  LV: { code: "EUR", symbol: "€", country: "Latvia", phoneCode: "+371" },
+  LB: { code: "LBP", symbol: "ل.ل", country: "Lebanon", phoneCode: "+961" },
+  LS: { code: "LSL", symbol: "L", country: "Lesotho", phoneCode: "+266" },
+  LR: { code: "LRD", symbol: "$", country: "Liberia", phoneCode: "+231" },
+  LY: { code: "LYD", symbol: "LD", country: "Libya", phoneCode: "+218" },
+  LI: {
+    code: "CHF",
+    symbol: "CHF",
+    country: "Liechtenstein",
+    phoneCode: "+423",
+  },
+  LT: { code: "EUR", symbol: "€", country: "Lithuania", phoneCode: "+370" },
+  LU: { code: "EUR", symbol: "€", country: "Luxembourg", phoneCode: "+352" },
+  MO: { code: "MOP", symbol: "MOP$", country: "Macao", phoneCode: "+853" },
+  MK: {
+    code: "MKD",
+    symbol: "ден",
+    country: "Macedonia (the former Yugoslav Republic of)",
+    phoneCode: "+389",
+  },
+  MG: { code: "MGA", symbol: "Ar", country: "Madagascar", phoneCode: "+261" },
+  MW: { code: "MWK", symbol: "MK", country: "Malawi", phoneCode: "+265" },
+  MY: { code: "MYR", symbol: "RM", country: "Malaysia", phoneCode: "+60" },
+  MV: { code: "MVR", symbol: "Rf", country: "Maldives", phoneCode: "+960" },
+  ML: { code: "XOF", symbol: "Fr", country: "Mali", phoneCode: "+223" },
+  MT: { code: "EUR", symbol: "€", country: "Malta", phoneCode: "+356" },
+  MH: {
+    code: "USD",
+    symbol: "$",
+    country: "Marshall Islands",
+    phoneCode: "+692",
+  },
+  MQ: { code: "EUR", symbol: "€", country: "Martinique", phoneCode: "+596" },
+  MR: { code: "MRU", symbol: "UM", country: "Mauritania", phoneCode: "+222" },
+  MU: { code: "MUR", symbol: "₨", country: "Mauritius", phoneCode: "+230" },
+  YT: { code: "EUR", symbol: "€", country: "Mayotte", phoneCode: "+262" },
+  MX: { code: "MXN", symbol: "$", country: "Mexico", phoneCode: "+52" },
+  FM: {
+    code: "USD",
+    symbol: "$",
+    country: "Micronesia (Federated States of)",
+    phoneCode: "+691",
+  },
+  MD: {
+    code: "MDL",
+    symbol: "L",
+    country: "Moldova (Republic of)",
+    phoneCode: "+373",
+  },
+  MC: { code: "EUR", symbol: "€", country: "Monaco", phoneCode: "+377" },
+  MN: { code: "MNT", symbol: "₮", country: "Mongolia", phoneCode: "+976" },
+  ME: { code: "EUR", symbol: "€", country: "Montenegro", phoneCode: "+382" },
+  MS: { code: "XCD", symbol: "$", country: "Montserrat", phoneCode: "+1" },
+  MA: { code: "MAD", symbol: "DH", country: "Morocco", phoneCode: "+212" },
+  MZ: { code: "MZN", symbol: "MT", country: "Mozambique", phoneCode: "+258" },
+  MM: { code: "MMK", symbol: "K", country: "Myanmar", phoneCode: "+95" },
+  NA: { code: "NAD", symbol: "$", country: "Namibia", phoneCode: "+264" },
+  NR: { code: "AUD", symbol: "$", country: "Nauru", phoneCode: "+674" },
+  NP: { code: "NPR", symbol: "₨", country: "Nepal", phoneCode: "+977" },
+  NL: { code: "EUR", symbol: "€", country: "Netherlands", phoneCode: "+31" },
+  NC: {
+    code: "XPF",
+    symbol: "Fr",
+    country: "New Caledonia",
+    phoneCode: "+687",
+  },
+  NZ: { code: "NZD", symbol: "$", country: "New Zealand", phoneCode: "+64" },
+  NI: { code: "NIO", symbol: "C$", country: "Nicaragua", phoneCode: "+505" },
+  NE: { code: "XOF", symbol: "Fr", country: "Niger", phoneCode: "+227" },
+  NG: { code: "NGN", symbol: "₦", country: "Nigeria", phoneCode: "+234" },
+  NU: { code: "NZD", symbol: "$", country: "Niue", phoneCode: "+683" },
+  NF: {
+    code: "AUD",
+    symbol: "$",
+    country: "Norfolk Island",
+    phoneCode: "+672",
+  },
+  MP: {
+    code: "USD",
+    symbol: "$",
+    country: "Northern Mariana Islands",
+    phoneCode: "+1",
+  },
+  NO: { code: "NOK", symbol: "kr", country: "Norway", phoneCode: "+47" },
+  OM: { code: "OMR", symbol: "ر.ع.", country: "Oman", phoneCode: "+968" },
+  PK: { code: "PKR", symbol: "₨", country: "Pakistan", phoneCode: "+92" },
+  PW: { code: "USD", symbol: "$", country: "Palau", phoneCode: "+680" },
+  PS: {
+    code: "ILS",
+    symbol: "₪",
+    country: "Palestine, State of",
+    phoneCode: "+970",
+  },
+  PA: { code: "PAB", symbol: "B/.", country: "Panama", phoneCode: "+507" },
+  PG: {
+    code: "PGK",
+    symbol: "K",
+    country: "Papua New Guinea",
+    phoneCode: "+675",
+  },
+  PY: { code: "PYG", symbol: "₲", country: "Paraguay", phoneCode: "+595" },
+  PE: { code: "PEN", symbol: "S/", country: "Peru", phoneCode: "+51" },
+  PH: { code: "PHP", symbol: "₱", country: "Philippines", phoneCode: "+63" },
+  PN: { code: "NZD", symbol: "$", country: "Pitcairn", phoneCode: "" },
+  PL: { code: "PLN", symbol: "zł", country: "Poland", phoneCode: "+48" },
+  PT: { code: "EUR", symbol: "€", country: "Portugal", phoneCode: "+351" },
+  PR: { code: "USD", symbol: "$", country: "Puerto Rico", phoneCode: "+1" },
+  QA: { code: "QAR", symbol: "ر.ق", country: "Qatar", phoneCode: "+974" },
+  RE: { code: "EUR", symbol: "€", country: "Réunion", phoneCode: "+262" },
+  RO: { code: "RON", symbol: "lei", country: "Romania", phoneCode: "+40" },
+  RU: {
+    code: "RUB",
+    symbol: "₽",
+    country: "Russian Federation",
+    phoneCode: "+7",
+  },
+  RW: { code: "RWF", symbol: "Fr", country: "Rwanda", phoneCode: "+250" },
+  BL: {
+    code: "EUR",
+    symbol: "€",
+    country: "Saint Barthélemy",
+    phoneCode: "+590",
+  },
+  SH: {
+    code: "SHP",
+    symbol: "£",
+    country: "Saint Helena, Ascension and Tristan da Cunha",
+    phoneCode: "+290",
+  },
+  KN: {
+    code: "XCD",
+    symbol: "$",
+    country: "Saint Kitts and Nevis",
+    phoneCode: "+1",
+  },
+  LC: { code: "XCD", symbol: "$", country: "Saint Lucia", phoneCode: "+1" },
+  MF: {
+    code: "EUR",
+    symbol: "€",
+    country: "Saint Martin (French part)",
+    phoneCode: "+590",
+  },
+  PM: {
+    code: "EUR",
+    symbol: "€",
+    country: "Saint Pierre and Miquelon",
+    phoneCode: "+508",
+  },
+  VC: {
+    code: "XCD",
+    symbol: "$",
+    country: "Saint Vincent and the Grenadines",
+    phoneCode: "+1",
+  },
+  WS: { code: "WST", symbol: "T", country: "Samoa", phoneCode: "+685" },
+  SM: { code: "EUR", symbol: "€", country: "San Marino", phoneCode: "+378" },
+  ST: {
+    code: "STN",
+    symbol: "Db",
+    country: "Sao Tome and Principe",
+    phoneCode: "+239",
+  },
+  SA: {
+    code: "SAR",
+    symbol: "ر.س",
+    country: "Saudi Arabia",
+    phoneCode: "+966",
+  },
+  SN: { code: "XOF", symbol: "Fr", country: "Senegal", phoneCode: "+221" },
+  RS: { code: "RSD", symbol: "дин.", country: "Serbia", phoneCode: "+381" },
+  SC: { code: "SCR", symbol: "₨", country: "Seychelles", phoneCode: "+248" },
+  SL: { code: "SLL", symbol: "Le", country: "Sierra Leone", phoneCode: "+232" },
+  SG: { code: "SGD", symbol: "$", country: "Singapore", phoneCode: "+65" },
+  SX: {
+    code: "ANG",
+    symbol: "ƒ",
+    country: "Sint Maarten (Dutch part)",
+    phoneCode: "+1",
+  },
+  SK: { code: "EUR", symbol: "€", country: "Slovakia", phoneCode: "+421" },
+  SI: { code: "EUR", symbol: "€", country: "Slovenia", phoneCode: "+386" },
+  SB: {
+    code: "SBD",
+    symbol: "$",
+    country: "Solomon Islands",
+    phoneCode: "+677",
+  },
+  SO: { code: "SOS", symbol: "Sh.So.", country: "Somalia", phoneCode: "+252" },
+  ZA: { code: "ZAR", symbol: "R", country: "South Africa", phoneCode: "+27" },
+  GS: {
+    code: "GBP",
+    symbol: "£",
+    country: "South Georgia and the South Sandwich Islands",
+    phoneCode: "",
+  },
+  SS: { code: "SSP", symbol: "£", country: "South Sudan", phoneCode: "+211" },
+  ES: { code: "EUR", symbol: "€", country: "Spain", phoneCode: "+34" },
+  LK: { code: "LKR", symbol: "Rs", country: "Sri Lanka", phoneCode: "+94" },
+  SD: { code: "SDG", symbol: "SDG", country: "Sudan", phoneCode: "+249" },
+  SR: { code: "SRD", symbol: "$", country: "Suriname", phoneCode: "+597" },
+  SJ: {
+    code: "NOK",
+    symbol: "kr",
+    country: "Svalbard and Jan Mayen",
+    phoneCode: "+47",
+  },
+  SE: { code: "SEK", symbol: "kr", country: "Sweden", phoneCode: "+46" },
+  CH: { code: "CHF", symbol: "CHF", country: "Switzerland", phoneCode: "+41" },
+  SY: {
+    code: "SYP",
+    symbol: "LS",
+    country: "Syrian Arab Republic",
+    phoneCode: "+963",
+  },
+  TW: { code: "TWD", symbol: "NT$", country: "Taiwan", phoneCode: "+886" },
+  TJ: { code: "TJS", symbol: "ЅМ", country: "Tajikistan", phoneCode: "+992" },
+  TZ: {
+    code: "TZS",
+    symbol: "TSh",
+    country: "Tanzania, United Republic of",
+    phoneCode: "+255",
+  },
+  TH: { code: "THB", symbol: "฿", country: "Thailand", phoneCode: "+66" },
+  TL: { code: "USD", symbol: "$", country: "Timor-Leste", phoneCode: "+670" },
+  TG: { code: "XOF", symbol: "Fr", country: "Togo", phoneCode: "+228" },
+  TK: { code: "NZD", symbol: "$", country: "Tokelau", phoneCode: "+690" },
+  TO: { code: "TOP", symbol: "T$", country: "Tonga", phoneCode: "+676" },
+  TT: {
+    code: "TTD",
+    symbol: "TT$",
+    country: "Trinidad and Tobago",
+    phoneCode: "+1",
+  },
+  TN: { code: "TND", symbol: "د.ت", country: "Tunisia", phoneCode: "+216" },
+  TR: { code: "TRY", symbol: "₺", country: "Turkey", phoneCode: "+90" },
+  TM: { code: "TMT", symbol: "T", country: "Turkmenistan", phoneCode: "+993" },
+  TC: {
+    code: "USD",
+    symbol: "$",
+    country: "Turks and Caicos Islands",
+    phoneCode: "+1",
+  },
+  TV: { code: "AUD", symbol: "$", country: "Tuvalu", phoneCode: "+688" },
+  UG: { code: "UGX", symbol: "USh", country: "Uganda", phoneCode: "+256" },
+  UA: { code: "UAH", symbol: "₴", country: "Ukraine", phoneCode: "+380" },
+  AE: {
+    code: "AED",
+    symbol: "د.إ",
+    country: "United Arab Emirates",
+    phoneCode: "+971",
+  },
+  GB: {
+    code: "GBP",
+    symbol: "£",
+    country: "United Kingdom of Great Britain and Northern Ireland",
+    phoneCode: "+44",
+  },
+  UM: {
+    code: "USD",
+    symbol: "$",
+    country: "United States Minor Outlying Islands",
+    phoneCode: "",
+  },
+  US: {
+    code: "USD",
+    symbol: "$",
+    country: "United States of America",
+    phoneCode: "+1",
+  },
+  UY: { code: "UYU", symbol: "$", country: "Uruguay", phoneCode: "+598" },
+  UZ: { code: "UZS", symbol: "soʻm", country: "Uzbekistan", phoneCode: "+998" },
+  VU: { code: "VUV", symbol: "VT", country: "Vanuatu", phoneCode: "+678" },
+  VE: {
+    code: "VES",
+    symbol: "Bs.S.",
+    country: "Venezuela (Bolivarian Republic of)",
+    phoneCode: "+58",
+  },
+  VN: { code: "VND", symbol: "₫", country: "Viet Nam", phoneCode: "+84" },
+  VG: {
+    code: "USD",
+    symbol: "$",
+    country: "Virgin Islands (British)",
+    phoneCode: "+1",
+  },
+  VI: {
+    code: "USD",
+    symbol: "$",
+    country: "Virgin Islands (U.S.)",
+    phoneCode: "+1",
+  },
+  WF: {
+    code: "XPF",
+    symbol: "Fr",
+    country: "Wallis and Futuna",
+    phoneCode: "+681",
+  },
+  EH: {
+    code: "MAD",
+    symbol: "DH",
+    country: "Western Sahara",
+    phoneCode: "+212",
+  },
+  YE: { code: "YER", symbol: "ر.ي", country: "Yemen", phoneCode: "+967" },
+  ZM: { code: "ZMW", symbol: "ZK", country: "Zambia", phoneCode: "+260" },
+  ZW: { code: "ZWL", symbol: "Z$", country: "Zimbabwe", phoneCode: "+263" },
 };
 
 export default countryCurrencyMapping;

@@ -1,25 +1,28 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
+import React, { useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
-import Fade from "@mui/material/Fade";
 import Slide from "@mui/material/Slide";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
 }
 
-export default function TransitionsSnackbar() {
+export default function TransitionsSnackbar({ set, setNumber }) {
   const [state, setState] = useState({
     open: false,
-    Transition: Fade,
+    Transition: SlideTransition,
+    horizontal: "center",
+    vertical: "bottom",
   });
+  const [phonenumber, setPhonenumber] = useState("");
 
-  const handleClick = (Transition) => () => {
-    setState({
-      open: true,
-      Transition,
-    });
-  };
+  useEffect(() => {
+    setState((prevState) => ({
+      ...prevState,
+      open: set,
+    }));
+    setPhonenumber(setNumber);
+  }, [set, setNumber]);
 
   const handleClose = () => {
     setState({
@@ -28,16 +31,23 @@ export default function TransitionsSnackbar() {
     });
   };
 
+  const { horizontal, vertical, Transition } = state;
+
   return (
     <div>
-      <Button onClick={handleClick(SlideTransition)}>Slide Transition</Button>
       <Snackbar
         open={state.open}
         onClose={handleClose}
-        TransitionComponent={state.Transition}
-        message="I love snacks"
+        TransitionComponent={Transition}
+        message={
+          <span>
+            <CheckCircleIcon className="mr-4 text-green-600" />
+            Verification code sent to {phonenumber}
+          </span>
+        }
         key={state.Transition.name}
-        autoHideDuration={2000}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical, horizontal }}
       />
     </div>
   );
