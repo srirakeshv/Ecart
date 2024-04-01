@@ -15,6 +15,11 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [hover, setHover] = useState(null);
   const navigate = useNavigate();
+  const [selectedMenu, setSelectedMenu] = useState("");
+
+  const handleMenuClick = (menuText) => {
+    setSelectedMenu(menuText);
+  };
 
   return (
     <nav className="bg-white flex justify-center relative font-ubuntu">
@@ -30,6 +35,7 @@ const Navbar = () => {
             className="p-3"
             onMouseEnter={() => setHover("Login")}
             onMouseLeave={() => setHover(null)}
+            onClick={() => navigate("/login")}
           >
             <span
               className={`p-2 flex gap-1 items-center rounded-md ${
@@ -46,7 +52,9 @@ const Navbar = () => {
                 <ChevronDown size={20} />
               )}
             </span>
-            {hover === "Login" ? <NavbarLogin /> : null}
+            {hover === "Login" ? (
+              <NavbarLogin onClick={handleMenuClick} />
+            ) : null}
           </li>
           <li className={`flex items-center gap-2 cursor-pointer`}>
             <ShoppingCart />
@@ -73,6 +81,12 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
+      {selectedMenu && (
+        <div>
+          {selectedMenu === "signup" && navigate("/signup")}
+          {/* {selectedMenu === "Orders" && navigate("/orders")} */}
+        </div>
+      )}
     </nav>
   );
 };

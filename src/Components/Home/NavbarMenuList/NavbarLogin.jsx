@@ -9,7 +9,7 @@ import {
 import "tailwindcss/tailwind.css";
 import { useNavigate } from "react-router-dom";
 
-const NavbarLogin = () => {
+const NavbarLogin = ({ onClick }) => {
   const [hoverMenu, setHoverMenu] = useState(null); //hover setting
   const navigate = useNavigate(); //navigating to another page
 
@@ -22,7 +22,7 @@ const NavbarLogin = () => {
           <span>New customer</span>
           <span
             className="text-blue-700 font-semibold cursor-pointer"
-            onClick={() => navigate("/signup")}
+            onClick={() => onClick("signup")}
           >
             Sign Up
           </span>
