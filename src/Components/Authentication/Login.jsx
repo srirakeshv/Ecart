@@ -152,7 +152,12 @@ const Login = () => {
                 </span>
               </p>
               <form className="w-full">
-                <input type="text" name="" id="" className="w-full" />
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  className="w-full bg-red-600 text-white"
+                />
                 <button className="bg-blue-600 p-3 text-white w-full">
                   Verify
                 </button>
