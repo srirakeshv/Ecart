@@ -8,6 +8,8 @@ import {
   isValidPhoneNumber,
   validatePhoneNumberLength,
 } from "libphonenumber-js";
+import OtpInput from "react-otp-input";
+import "./css/Login.css";
 
 const Login = () => {
   const [number, setNumber] = useState(""); //collecting number and upadating
@@ -18,6 +20,7 @@ const Login = () => {
   const [valid, setValid] = useState(""); //checking valid or not
   const [defaultActive, setDefaultActive] = useState(true); //setting default page false
   const [otpActive, setOtpActive] = useState(false); // setting otp page active
+  const [otp, setOtp] = useState("");
 
   //fetching user location for updating the price rates of the products
   useEffect(() => {
@@ -46,6 +49,12 @@ const Login = () => {
   useEffect(() => {
     myLocation();
   });
+
+  const styles = {
+    focusStyle: {
+      borderBottomColor: "blue", // Set the border color to blue when focused
+    },
+  };
 
   const myLocation = async () => {
     try {
@@ -138,7 +147,7 @@ const Login = () => {
             </form>
           )}{" "}
           {otpActive && (
-            <div className="flex flex-col items-center mt-5">
+            <div className="flex flex-col items-center mt-5 w-full">
               <p className="max-w-60 w-full text-center">
                 Please enter the OTP sent to {number}.{" "}
                 <span
@@ -152,13 +161,33 @@ const Login = () => {
                 </span>
               </p>
               <form className="w-full">
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  className="w-full bg-red-600 text-white"
+                <OtpInput
+                  value={otp}
+                  onChange={setOtp}
+                  numInputs={6}
+                  renderSeparator={<span></span>}
+                  renderInput={(props) => <input {...props} />}
+                  containerStyle={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
+                    marginTop: "40px",
+                  }}
+                  inputStyle={{
+                    borderBottomWidth: "0.1px",
+                    borderColor: "lightgrey",
+                    width: "30px",
+                    height: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    outline: "none",
+                    forcedColor: "blue",
+                  }}
+                  focusStyles={styles.focusStyle}
+                  shouldAutoFocus={true}
                 />
-                <button className="bg-blue-600 p-3 text-white w-full">
+                <button className="bg-blue-600 p-3 text-white w-full mt-10">
                   Verify
                 </button>
               </form>

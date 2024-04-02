@@ -56,7 +56,10 @@ const Navbar = () => {
               <NavbarLogin onClick={handleMenuClick} />
             ) : null}
           </li>
-          <li className={`flex items-center gap-2 cursor-pointer`}>
+          <li
+            className={`flex items-center gap-2 cursor-pointer`}
+            onClick={() => navigate("/cart")}
+          >
             <ShoppingCart />
             Cart
           </li>

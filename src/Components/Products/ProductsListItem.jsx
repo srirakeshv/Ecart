@@ -6,6 +6,9 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Skeleton from "@mui/material/Skeleton";
 import countryCurrencyMapping from "../../ArrayList/CountryCurrency";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FlashOnIcon from "@mui/icons-material/FlashOn";
+import { useCart } from "../Cart/CartProvider";
 
 const ProductsListItem = () => {
   const [input, setInput] = useState(""); //updating the input
@@ -21,6 +24,11 @@ const ProductsListItem = () => {
   const [symbol, setSymbol] = useState(""); //setting dynamic symbols for different locations
   const [curency, setCurrency] = useState(""); //setting dynamic currency based on location
   const [convertingPrice, setConvertingPrice] = useState(""); //setting the price of currency based on location equal to 1 dollar
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (item) => {
+    addToCart({ item, symbol, convertingPrice });
+  };
 
   //handlechange event for input tag
   const handleChange = (e) => {
@@ -223,6 +231,7 @@ const ProductsListItem = () => {
                       className="w-full flex-1"
                       animation="wave"
                       sx={{ fontSize: "1rem" }}
+                      style={{ borderRadius: "10px" }}
                     />
                   ) : (
                     <p
@@ -273,6 +282,7 @@ const ProductsListItem = () => {
                       animation="wave"
                       width={100}
                       sx={{ fontSize: "3rem" }}
+                      style={{ borderRadius: "10px" }}
                     />
                   ) : (
                     <p className="font-medium self-start text-2xl">
@@ -286,6 +296,7 @@ const ProductsListItem = () => {
                       animation="wave"
                       width={200}
                       sx={{ fontSize: "1rem" }}
+                      style={{ borderRadius: "10px" }}
                     />
                   ) : (
                     <p className="text-sm">Free delivery</p>
@@ -293,16 +304,54 @@ const ProductsListItem = () => {
                   {loading1 ? (
                     <Skeleton
                       variant="text"
-                      className="w-full"
+                      className="w-full rounded-full"
                       animation="wave"
                       width={200}
                       sx={{ fontSize: "1rem" }}
+                      style={{ borderRadius: "10px" }}
                     />
                   ) : (
                     <p className="text-sm text-green-600 font-semibold">
                       Save extra with combo offers
                     </p>
                   )}
+                  <div className="flex gap-3 items-center mt-10">
+                    {loading1 ? (
+                      <Skeleton
+                        variant="rectangular"
+                        animation="wave"
+                        width={180}
+                        height={40}
+                      />
+                    ) : (
+                      <button
+                        className="p-3 rounded-sm flex gap-2 items-center justify-center text-white w-44"
+                        style={{ backgroundColor: "#FF9F00" }}
+                        onClick={() =>
+                          handleAddToCart(ar, symbol, convertingPrice)
+                        }
+                      >
+                        <ShoppingCartIcon />
+                        ADD TO CART
+                      </button>
+                    )}
+                    {loading1 ? (
+                      <Skeleton
+                        variant="rectangular"
+                        animation="wave"
+                        width={180}
+                        height={40}
+                      />
+                    ) : (
+                      <button
+                        className="p-3 rounded-sm flex gap-2 items-center justify-center text-white w-44"
+                        style={{ backgroundColor: "#FB641B" }}
+                      >
+                        <FlashOnIcon />
+                        BUY NOW
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -314,9 +363,11 @@ const ProductsListItem = () => {
           <div className="flex items-center justify-center gap-5 flex-wrap">
             {defaultArray.map((def, index) => (
               <div
-                className="basis-72 h-80 rounded-lg border-gray-400 flex flex-col justify-between gap-3 items-center p-3 cursor-pointer"
+                className={`basis-72 h-80 rounded-lg  ${
+                  loading ? "" : "border-gray-400"
+                } flex flex-col justify-between gap-3 items-center p-3 cursor-pointer`}
                 key={index}
-                style={{ borderWidth: "0.1px" }}
+                style={{ borderWidth: loading ? "0px" : "0.1px" }}
               >
                 {loading ? (
                   <Skeleton
@@ -341,6 +392,7 @@ const ProductsListItem = () => {
                       className="w-full"
                       animation="wave"
                       sx={{ fontSize: "1rem" }}
+                      style={{ borderRadius: "10px" }}
                     />
                   ) : (
                     <p className="text-sm text-center">{def.title}</p>
@@ -351,6 +403,7 @@ const ProductsListItem = () => {
                       className="w-full"
                       animation="wave"
                       sx={{ fontSize: "1rem" }}
+                      style={{ borderRadius: "10px" }}
                     />
                   ) : (
                     <p className="font-semibold">
