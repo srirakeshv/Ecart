@@ -26,8 +26,8 @@ const ProductsListItem = () => {
   const [convertingPrice, setConvertingPrice] = useState(""); //setting the price of currency based on location equal to 1 dollar
   const { addToCart } = useCart();
 
-  const handleAddToCart = (item) => {
-    addToCart({ item, symbol, convertingPrice });
+  const handleAddToCart = (item, symbol, convertingPrice) => {
+    addToCart(item, symbol, convertingPrice);
   };
 
   //handlechange event for input tag

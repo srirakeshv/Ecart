@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCart } from "./CartProvider";
 import "tailwindcss/tailwind.css";
 
 const Cart = () => {
   const { cartItems, symbol, price } = useCart();
+
+  // useEffect(() => {
+  //   console.log(symbol);
+  //   console.log(price);
+  // }, [symbol, price]);
 
   return (
     <div
@@ -23,7 +28,7 @@ const Cart = () => {
             <div>
               <p className="font-semibold text-xl">{item.title}</p>
               <p>
-                {symbol} {item.price * price}
+                {symbol} {(item.price * price).toFixed(2)}
               </p>
             </div>
           </div>
