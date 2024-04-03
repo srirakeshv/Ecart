@@ -1,8 +1,10 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
 import ProductList from "../../../ArrayList/ProductList";
+import { useNavigate } from "react-router-dom";
 
 const Appliances = () => {
+  const navigate = useNavigate();
   //shuffling the arraylist
   const shufflearray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -23,8 +25,9 @@ const Appliances = () => {
           {randomGeneratedArray.map((product, index) => (
             <div
               key={index}
-              className="p-2 rounded-lg flex flex-col justify-between items-center border-gray-300 basis-60"
+              className="cursor-pointer p-2 rounded-lg flex flex-col justify-between items-center border-gray-300 basis-60"
               style={{ borderWidth: "0.1px" }}
+              onClick={() => navigate("/ProductPage")}
             >
               <img
                 src={`${process.env.PUBLIC_URL}${product.ImageUrl}`}
