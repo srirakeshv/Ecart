@@ -1,3 +1,12 @@
+# Basic functions are done with Fakestoreapi
+
+When onclick the Become a seller store opens and search bar works only for these below mentioned products only
+["electronics", "jewelery", "men's clothing", "women's clothing"]
+
+- Login and signup page basic functions like checking Phone numbers
+- Gets location and displays the rates and the country code dynamically
+- Add to cart just works when click on add to cart in product and click on navbar cart just visualize the product alone
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
