@@ -7,11 +7,11 @@ import {
   CreditCard,
 } from "lucide-react";
 import "tailwindcss/tailwind.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const NavbarLogin = ({ onClick }) => {
   const [hoverMenu, setHoverMenu] = useState(null); //hover setting
-  const navigate = useNavigate(); //navigating to another page
+  // const navigate = useNavigate(); //navigating to another page
 
   return (
     <div className="absolute top-[50px] right-80 z-10 w-60 rounded-md shadow-sm shadow-slate-700 bg-white font-ubuntu">

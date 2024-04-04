@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import TextField from "@mui/material/TextField";
-import {
-  isPossiblePhoneNumber,
-  isValidPhoneNumber,
-  validatePhoneNumberLength,
-} from "libphonenumber-js";
+import { isPossiblePhoneNumber } from "libphonenumber-js";
 import TransitionsSnackbar from "../Snackbar/SnackBar2";
 import countryCurrencyMapping from "../../ArrayList/CountryCurrency";
 

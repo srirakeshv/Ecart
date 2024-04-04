@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "tailwindcss/tailwind.css";
 import TextField from "@mui/material/TextField";
-import TransitionsSnackbar from "../Snackbar/SnackBar2";
+// import TransitionsSnackbar from "../Snackbar/SnackBar2";
 import countryCurrencyMapping from "../../ArrayList/CountryCurrency";
-import {
-  isPossiblePhoneNumber,
-  isValidPhoneNumber,
-  validatePhoneNumberLength,
-} from "libphonenumber-js";
+import { isPossiblePhoneNumber } from "libphonenumber-js";
 import OtpInput from "react-otp-input";
 import "./css/Login.css";
 
@@ -95,7 +91,7 @@ const Login = () => {
     e.preventDefault();
     const validNumber = isPossiblePhoneNumber(phoneCode + number);
     setValid(validNumber);
-    if (validNumber) {
+    if (valid) {
       setDefaultActive(false); // Set defaultActive to false only if validNumber is true
       setOtpActive(true); // Set otpActive to true
     }
