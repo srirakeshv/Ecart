@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useCart } from "./CartProvider";
 import "tailwindcss/tailwind.css";
 
